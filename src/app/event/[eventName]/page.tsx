@@ -1,5 +1,8 @@
-import { db } from "@/lib/db";
+"use client";
+
 import { FC } from "react";
+import { useRouter } from "next/navigation";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 type EventPageProps = {
   params: {
@@ -7,19 +10,11 @@ type EventPageProps = {
   };
 };
 
-const EventPage: FC<EventPageProps> = async ({ params }) => {
-  const { eventName } = params;
+const EventPage: FC<EventPageProps> = ({ params }) => {
+  const router = useRouter();
+  const { user } = useUser();
 
-  const event = await db.event.findUnique({
-    where: {
-      name: eventName,
-    },
-    include: {
-      drivers: true,
-      riders: true,
-    },
-  });
-
+  if (!user) router.replace("/api/auth/login");
   return <main></main>;
 };
 
