@@ -3,17 +3,21 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { EventSchema } from "@/lib/schemas/event";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
+import { Map } from "@/components/Map";
 
 const CreateEventPage: FC = () => {
+  const [location, setLocation] = useState<
+    { lat: number; lng: number } | undefined
+  >(undefined);
   const { register, handleSubmit } = useForm<EventSchema>({
     defaultValues: {
       name: "",
-      location: { lat: 0, lng: 0 },
+      location: { lat: "0", lng: "0" },
     },
   });
   const submit = async (payload: EventSchema) => {
@@ -26,7 +30,7 @@ const CreateEventPage: FC = () => {
     onError: (error) => console.log(error),
   });
   return (
-    <main>
+    <main className="container">
       <form
         onSubmit={handleSubmit((data) => createEvent(data))}
         className="container space-y-4"
@@ -35,13 +39,8 @@ const CreateEventPage: FC = () => {
           <Label htmlFor="name">Event name</Label>
           <Input id="name" type="text" {...register("name")} />
         </div>
-        <div>
-          <Label htmlFor="latitude">Lat</Label>
-          <Input id="latitude" type="number" {...register("location.lat")} />
-        </div>
-        <div>
-          <Label htmlFor="longitude">Lng</Label>
-          <Input id="longitude" type="number" {...register("location.lng")} />
+        <div className="w-full">
+          <Map location={location} setLocation={setLocation} />
         </div>
         <Button type="submit">Submit</Button>
       </form>
