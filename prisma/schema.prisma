@@ -20,7 +20,8 @@ model Event {
 }
 
 model Driver {
-  id        Int     @id @default(autoincrement())
+  id        String  @id
+  capacity  Int
   latitude  Float
   longitude Float
   Event     Event?  @relation(fields: [eventName], references: [name])
@@ -28,7 +29,7 @@ model Driver {
 }
 
 model Rider {
-  id        Int     @id @default(autoincrement())
+  id        Int     @id
   latitude  Float
   longitude Float
   Event     Event?  @relation(fields: [eventName], references: [name])

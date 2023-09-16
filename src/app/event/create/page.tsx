@@ -32,7 +32,13 @@ const CreateEventPage: FC = () => {
   return (
     <main className="container">
       <form
-        onSubmit={handleSubmit((data) => createEvent(data))}
+        onSubmit={handleSubmit((data) => {
+          data.location = {
+            lat: location?.lat.toString()!,
+            lng: location?.lng.toString()!,
+          };
+          createEvent(data);
+        })}
         className="container space-y-4"
       >
         <div>

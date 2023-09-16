@@ -2,13 +2,13 @@ import { db } from "@/lib/db";
 import { FC } from "react";
 
 type EventPageProps = {
-  props: {
+  params: {
     eventName: string;
   };
 };
 
-const EventPage: FC<EventPageProps> = async ({ props }) => {
-  const { eventName } = props;
+const EventPage: FC<EventPageProps> = async ({ params }) => {
+  const { eventName } = params;
 
   const event = await db.event.findUnique({
     where: {
@@ -20,13 +20,7 @@ const EventPage: FC<EventPageProps> = async ({ props }) => {
     },
   });
 
-  return (
-    <main>
-      {event?.drivers.map((driver, i) => (
-        <div key={i}>{driver.id}</div>
-      ))}
-    </main>
-  );
+  return <main></main>;
 };
 
 export default EventPage;
