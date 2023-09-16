@@ -140,6 +140,9 @@ async function calculateDetourWithPassengers(driver, eventPin, sortedPassengers)
 }
 
 
+let driverWaypoints = {}; // { DriverID: { PassengerID: [lat, lon], ... }, ... }
+let passengerDriverMap = {}; // { PassengerID: DriverID, ... }
+
 // Load dummy data from JSON file and compute the driver's travel time to the event
 async function main() {
     // Get the data. Replace this with database fetch when we're done implementing the database.
@@ -158,6 +161,19 @@ async function main() {
         console.log(`Sorted passengers for Driver ${driver.DriverID}: `, sortedPassengers);
 
         const selectedWaypoints = await calculateDetourWithPassengers(driver, eventPin, sortedPassengers);
+
+        // Update driverWaypoints
+        driverWaypoints[driver.DriverID] = {};
+        for (const waypoint of selectedWaypoints) {
+            const matchingPassenger = availablePassengers.find(passenger => {
+                return `${passenger.PassengerPin[0]},${passenger.PassengerPin[1]}` === waypoint;
+            });
+            if (matchingPassenger) {
+                driverWaypoints[driver.DriverID][matchingPassenger.PassengerID] = matchingPassenger.PassengerPin;
+                passengerDriverMap[matchingPassenger.PassengerID] = driver.DriverID;
+            }
+        }
+
 
         // Remove the selected waypoints from availablePassengers so they are not considered for other drivers.
         const selectedPassengerCoords = new Set(selectedWaypoints);
@@ -178,6 +194,20 @@ async function main() {
         console.log("All passengers have been assigned to drivers.");
     }
 
+    saveToJson(dummyData.Event.EventID, driverWaypoints, passengerDriverMap);
+}
+
+function saveToJson(eventID, driverWaypoints, passengerDriverMap) {
+    const outputData = {
+        Event: eventID,
+        Drivers: driverWaypoints,
+        Passengers: Object.entries(passengerDriverMap).map(([passengerID, driverID]) => {
+            return { [passengerID]: driverID };
+        })
+    };
+    
+    fs.writeFileSync('./outputdata.json', JSON.stringify(outputData, null, 2));
 }
 
 main();
+
