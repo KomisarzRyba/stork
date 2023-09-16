@@ -2,20 +2,14 @@
     "Event": {
       "EventPin": [34.0522, -118.2437],
       "Drivers": [
-        {"DriverID": "D1", "Capacity": 3, "DriverPin": [34.0522, -119.2439]},
         {"DriverID": "D2", "Capacity": 3, "DriverPin": [34.0530, -118.2441]},
         {"DriverID": "D3", "Capacity": 3, "DriverPin": [34.0535, -118.2436]},
         {"DriverID": "D4", "Capacity": 3, "DriverPin": [34.0540, -118.2444]},
-        {"DriverID": "D5", "Capacity": 3, "DriverPin": [34.0545, -118.2432]},
         {"DriverID": "D6", "Capacity": 3, "DriverPin": [34.0550, -118.2447]},
         {"DriverID": "D7", "Capacity": 3, "DriverPin": [34.0555, -118.2431]},
         {"DriverID": "D8", "Capacity": 3, "DriverPin": [34.0560, -118.2449]},
-        {"DriverID": "D9", "Capacity": 3, "DriverPin": [34.0565, -118.2429]},
-        {"DriverID": "D10", "Capacity": 3, "DriverPin": [34.0570, -118.2437]},
         {"DriverID": "D11", "Capacity": 3, "DriverPin": [34.0575, -118.2443]},
         {"DriverID": "D12", "Capacity": 3, "DriverPin": [34.0580, -118.2435]},
-        {"DriverID": "D13", "Capacity": 3, "DriverPin": [34.0585, -118.2442]},
-        {"DriverID": "D14", "Capacity": 3, "DriverPin": [34.0590, -118.2433]},
         {"DriverID": "D15", "Capacity": 3, "DriverPin": [34.0595, -118.2441]}
       ],
       "Passengers": [
