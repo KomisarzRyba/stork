@@ -15,7 +15,7 @@ const EventPage: FC<EventPageProps> = ({ params }) => {
   const { user } = useUser();
 
   if (!user) router.replace("/api/auth/login");
-  return <main></main>;
+  return <main>event page</main>;
 };
 
 export default EventPage;
