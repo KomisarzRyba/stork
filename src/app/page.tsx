@@ -1,5 +1,6 @@
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { db } from "@/lib/db";
+import Link from "next/link";
 import { FC, Suspense } from "react";
 
 export default async function Home() {
@@ -20,11 +21,13 @@ const EventList: FC = async () => {
     <section className="container py-4 flex flex-col gap-4">
       {events.map((event, i) => {
         return (
-          <Card key={i}>
-            <CardHeader>
-              <CardTitle>{event.name}</CardTitle>
-            </CardHeader>
-          </Card>
+          <Link key={i} href={`/event/${event.name}`}>
+            <Card>
+              <CardHeader>
+                <CardTitle>{event.name}</CardTitle>
+              </CardHeader>
+            </Card>
+          </Link>
         );
       })}
     </section>
