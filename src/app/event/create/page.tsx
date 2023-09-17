@@ -2,19 +2,25 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { EventSchema } from "@/lib/schemas/event";
+import { EventSchema } from "@/lib/schemas/schemas";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Map } from "@/components/Map";
+import { toast, useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
+import { LoadingButton } from "@/components/ui/loading-button";
 
 const CreateEventPage: FC = () => {
-  const [location, setLocation] = useState<
-    { lat: number; lng: number } | undefined
-  >(undefined);
-  const { register, handleSubmit } = useForm<EventSchema>({
+  const { toast } = useToast();
+  const router = useRouter();
+  const [location, setLocation] = useState<{ lat: number; lng: number }>({
+    lat: 25.9072534,
+    lng: -80.1413436,
+  });
+  const { register, handleSubmit, getValues } = useForm<EventSchema>({
     defaultValues: {
       name: "",
       location: { lat: "0", lng: "0" },
@@ -24,10 +30,22 @@ const CreateEventPage: FC = () => {
     const { data } = await axios.post("/api/event", payload);
     return data;
   };
-  const { mutate: createEvent } = useMutation({
+  const { mutate: createEvent, isLoading } = useMutation({
     mutationFn: submit,
-    onSuccess: () => console.log("success"),
-    onError: (error) => console.log(error),
+    onSuccess: () => {
+      toast({
+        title: "Awesome!",
+        description: "Event created successfully!",
+      });
+      router.push("/event/" + getValues().name);
+    },
+    onError: (error) => {
+      toast({
+        title: "Something went wrong...",
+        description: (error as Error).message,
+        variant: "destructive",
+      });
+    },
   });
   return (
     <main className="container">
@@ -48,7 +66,9 @@ const CreateEventPage: FC = () => {
         <div className="w-full">
           <Map location={location} setLocation={setLocation} />
         </div>
-        <Button type="submit">Submit</Button>
+        <LoadingButton isLoading={isLoading} type="submit">
+          Submit
+        </LoadingButton>
       </form>
     </main>
   );

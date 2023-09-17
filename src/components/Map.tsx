@@ -2,10 +2,10 @@
 
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import {
+  ComponentProps,
   Dispatch,
   FC,
   SetStateAction,
-  useCallback,
   useMemo,
   useRef,
 } from "react";
@@ -17,15 +17,12 @@ type Location = {
 type MapProps = {
   location?: Location;
   setLocation: Dispatch<
-    SetStateAction<
-      | {
-          lat: number;
-          lng: number;
-        }
-      | undefined
-    >
+    SetStateAction<{
+      lat: number;
+      lng: number;
+    }>
   >;
-};
+} & ComponentProps<"div">;
 
 export const Map: FC<MapProps> = ({ location, setLocation }) => {
   const { isLoaded } = useLoadScript({
@@ -36,7 +33,7 @@ export const Map: FC<MapProps> = ({ location, setLocation }) => {
 
   if (!isLoaded) return <div>Loading...</div>;
   return (
-    <div className="w-screen h-screen">
+    <div className="w-[640px] h-[640px]">
       <GoogleMap
         ref={mapRef}
         center={location ?? center}
