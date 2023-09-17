@@ -18,19 +18,19 @@ model Event {
 
 model Driver {
   id        String  @id
-  name      String  @default("")
   latitude  Float
   longitude Float
   eventName String?
   capacity  Int
+  name      String  @default("")
   Event     Event?  @relation(fields: [eventName], references: [name])
 }
 
 model Rider {
   id        String  @id
-  name      String  @default("")
   latitude  Float
   longitude Float
   eventName String?
+  name      String  @default("")
   Event     Event?  @relation(fields: [eventName], references: [name])
 }
