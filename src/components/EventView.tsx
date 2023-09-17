@@ -2,17 +2,10 @@
 
 import { Driver, Event, Rider } from "@prisma/client";
 import axios from "axios";
-import { FC } from "react";
+import { FC, Suspense } from "react";
 import { useQuery } from "react-query";
-import { EventRegister } from "./EventRegister";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
 import { EventCard } from "./EventCard";
+import { EventRegister } from "./EventRegister";
 
 type EventViewProps = {
   eventName: string;
@@ -37,5 +30,10 @@ export const EventView: FC<EventViewProps> = ({ eventName }) => {
 
   if (!role) {
     return <EventRegister eventName={eventName} />;
-  } else return <EventCard data={data} role={role} />;
+  } else
+    return (
+      <Suspense fallback="loading...">
+        <EventCard data={data} role={role} />
+      </Suspense>
+    );
 };
