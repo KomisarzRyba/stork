@@ -58,3 +58,29 @@ export const POST = async (req: NextRequest) => {
     } else return new NextResponse(err as any);
   }
 };
+
+export const GET = async (req: NextRequest) => {
+  try {
+    const userId = req.nextUrl.searchParams.get("user");
+    const role = req.nextUrl.searchParams.get("role");
+    if (!userId || !role) throw new Error("Invalid query params");
+    if (role === "driver") {
+      const result = await db.driver.findUnique({
+        where: {
+          id: userId,
+        },
+      });
+      return new NextResponse(JSON.stringify(result));
+    } else {
+      const result = await db.rider.findUnique({
+        where: {
+          id: userId,
+        },
+      });
+      return new NextResponse(JSON.stringify(result));
+    }
+  } catch (err) {
+    console.log(err);
+    return new NextResponse(err as any, { status: 500 });
+  }
+};
