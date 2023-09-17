@@ -1,3 +1,5 @@
+"use client";
+
 import { FC } from "react";
 import {
   Card,
@@ -20,14 +22,14 @@ export const EventCard: FC<EventCardProps> = ({ data, role }) => {
   const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
   const getDirections = async () => {
+    console.log(data?.name);
     const { data: directionsData } = await axios.get(
-      process.env.NEXT_PUBLIC_PATHFINDER_URL! +
-        "/api/directions?event=" +
-        data?.name
+      "https://stork-pathfinder.vercel.app/api/directions?event=" + data?.name
     );
     return directionsData;
   };
   const { data: queryResult, isLoading } = useQuery({
+    queryKey: "directions",
     queryFn: getDirections,
     onSuccess: () => {
       console.log(queryResult);
