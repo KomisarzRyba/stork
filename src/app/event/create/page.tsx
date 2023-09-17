@@ -1,17 +1,16 @@
 "use client";
 
+import { Map } from "@/components/Map";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { LoadingButton } from "@/components/ui/loading-button";
+import { useToast } from "@/components/ui/use-toast";
 import { EventSchema } from "@/lib/schemas/schemas";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import axios from "axios";
-import { Button } from "@/components/ui/button";
-import { Map } from "@/components/Map";
-import { toast, useToast } from "@/components/ui/use-toast";
-import { useRouter } from "next/navigation";
-import { LoadingButton } from "@/components/ui/loading-button";
 
 const CreateEventPage: FC = () => {
   const { toast } = useToast();

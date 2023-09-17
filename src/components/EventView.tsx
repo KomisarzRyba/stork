@@ -1,8 +1,6 @@
-import { FC, useState, useEffect } from "react";
-import { db } from "@/lib/db";
-import { getSession } from "@auth0/nextjs-auth0";
-import { redirect } from "next/navigation";
 import axios from "axios";
+import { FC, useEffect, useState } from "react";
+import { EventRegister } from "./EventRegister";
 
 type EventViewProps = {
   eventName: string;
@@ -15,13 +13,12 @@ export const EventView: FC<EventViewProps> = ({ eventName }) => {
     const fetchData = async () => {
       try {
         const { data } = await axios.get(`/api/role?event=${eventName}`);
-        console.log(data);
 
         if (data.riders && data.riders[0]) {
-          setRole('rider');
-        } else {
-          setRole('driver');
-        }
+          setRole("rider");
+        } else if (data.drivers && data.drivers[0]) {
+          setRole("driver");
+        } else setRole(null);
       } catch (error) {
         console.error("Error fetching data:", error);
         // Handle error appropriately
@@ -31,13 +28,11 @@ export const EventView: FC<EventViewProps> = ({ eventName }) => {
     fetchData();
   }, [eventName]);
 
-  if (role === null) {
-    return <main>Loading...</main>; // or any loading state
-  }
-
-  return (
-    <main>
-      {role}
-    </main>
-  );
+  if (!role) {
+    return (
+      <main>
+        <EventRegister eventName={eventName} />
+      </main>
+    ); // or any loading state
+  } else return <main>{role}</main>;
 };
