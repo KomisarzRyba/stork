@@ -1,3 +1,4 @@
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { db } from "@/lib/db";
 import Link from "next/link";
@@ -30,6 +31,9 @@ const EventList: FC = async () => {
           </Link>
         );
       })}
+      <Link href={"/event/create"} className={buttonVariants()}>
+        Create event
+      </Link>
     </section>
   );
 };
