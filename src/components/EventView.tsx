@@ -12,12 +12,13 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
+import { EventCard } from "./EventCard";
 
 type EventViewProps = {
   eventName: string;
 };
 
-type EventFatData = Event & { drivers: Driver[] } & { riders: Rider[] };
+export type EventFatData = Event & { drivers: Driver[] } & { riders: Rider[] };
 
 let role: "driver" | "rider" | null = null;
 export const EventView: FC<EventViewProps> = ({ eventName }) => {
@@ -36,16 +37,5 @@ export const EventView: FC<EventViewProps> = ({ eventName }) => {
 
   if (!role) {
     return <EventRegister eventName={eventName} />;
-  } else
-    return (
-      <section className="w-full h-full p-12">
-        <Card className="w-full h-full">
-          <CardHeader>
-            <CardTitle>{data?.name}</CardTitle>
-            <CardDescription>You are a {role} for this event.</CardDescription>
-          </CardHeader>
-          <CardContent>map</CardContent>
-        </Card>
-      </section>
-    );
+  } else return <EventCard data={data} role={role} />;
 };
