@@ -4,7 +4,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
   try {
-    const eventName = req.nextUrl.searchParams.get("event");
+    let eventName = req.nextUrl.searchParams.get("event");
+    if (eventName?.includes(" ")) {
+      eventName = eventName.replace(/ /g,"_");
+    }
     if (!eventName)
       return new NextResponse("No event name provided", { status: 500 });
     const payload = await db.event.findUnique({

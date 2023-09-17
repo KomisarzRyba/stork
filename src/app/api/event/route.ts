@@ -5,7 +5,10 @@ import { ZodError } from "zod";
 
 export const POST = async (req: NextRequest) => {
   try {
-    const { name, location } = eventSchema.parse(await req.json());
+    let { name, location } = eventSchema.parse(await req.json());
+    if (name.includes(" ")) {
+      name = name.replace(/ /g,"_");
+    }
     const locationNumeric = {
       lat: parseFloat(location.lat),
       lng: parseFloat(location.lng),

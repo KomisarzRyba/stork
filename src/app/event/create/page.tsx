@@ -36,7 +36,7 @@ const CreateEventPage: FC = () => {
         title: "Awesome!",
         description: "Event created successfully!",
       });
-      router.push("/event/" + getValues().name);
+      router.push("/event/" + getValues().name.replace(/ /g, "_"));
     },
     onError: (error) => {
       toast({
@@ -54,6 +54,9 @@ const CreateEventPage: FC = () => {
             lat: location?.lat.toString()!,
             lng: location?.lng.toString()!,
           };
+          if (data.name.includes(" ")) {
+            data.name = data.name.replace(/ /g,"_");
+          }
           createEvent(data);
         })}
         className="container space-y-4"
