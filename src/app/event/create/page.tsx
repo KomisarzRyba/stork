@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { EventSchema } from "@/lib/schemas/event";
+import { EventSchema } from "@/lib/schemas/schemas";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";

@@ -16,14 +16,17 @@ type EventRegisterParams = {
 export const EventRegister: FC<EventRegisterParams> = ({ eventName }) => {
   return (
     <section className="container h-full flex flex-col justify-center items-center">
-      <div className="flex gap-2">
+      <div className="grid grid-cols-2 gap-2">
         <Card>
           <CardHeader>
             <CardTitle>I am driving</CardTitle>
             <CardDescription>I am willing to pick up others!</CardDescription>
           </CardHeader>
           <CardContent>
-            <Link href="/event/register/driver" className={buttonVariants()}>
+            <Link
+              href={`/event/${eventName}/register/driver`}
+              className={buttonVariants()}
+            >
               Register as driver
             </Link>
           </CardContent>
@@ -31,10 +34,13 @@ export const EventRegister: FC<EventRegisterParams> = ({ eventName }) => {
         <Card>
           <CardHeader>
             <CardTitle>I need a ride</CardTitle>
-            <CardDescription>Please have mercy and pick me up!</CardDescription>
+            <CardDescription>Pretty please!</CardDescription>
           </CardHeader>
           <CardContent>
-            <Link href="/event/register/rider" className={buttonVariants()}>
+            <Link
+              href={`/event/${eventName}/register/rider`}
+              className={buttonVariants()}
+            >
               Register as passenger
             </Link>
           </CardContent>

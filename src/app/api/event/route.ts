@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { eventSchema } from "@/lib/schemas/event";
+import { eventSchema } from "@/lib/schemas/schemas";
 import { NextRequest, NextResponse } from "next/server";
 import { ZodError } from "zod";
 
